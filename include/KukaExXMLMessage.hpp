@@ -24,7 +24,7 @@ class KukaExXMLMessage
 {
     public:
 
-    KukaExXMLMessage() : doc(true,COLLAPSE_WHITESPACE) {
+    KukaExXMLMessage() : doc(true,PRESERVE_WHITESPACE) {
         if(doc.WhitespaceMode() == COLLAPSE_WHITESPACE) {
             cout << "Collapsing whitespace." << endl;
         }
@@ -41,8 +41,16 @@ class KukaExXMLMessage
     }
 
     void toFile(const char *filename) {
-        XMLError toFileStatus = doc.SaveFile(filename, false);
-        cout << "Tried saving xml file: " << toFileStatus << endl;  // debug msg
+        //XMLError toFileStatus = doc.SaveFile(filename, false);
+
+        FILE *fp = fopen(filename,"w");
+        if (fp == NULL) {cout << "Error opening file";}
+
+        XMLPrinter filePrinter(fp);
+        doc.Print(&filePrinter);
+        fclose(fp);
+
+        // cout << "Tried saving xml file: " << toFileStatus << endl;  // debug msg
     }
 
     void printAllAsciiFromTwoFiles(const char *filenameA, const char *filenameB) {
@@ -58,10 +66,10 @@ class KukaExXMLMessage
 
         int diff = 0;
 
-        cout << "Ascii characters in files A B and difference so far:" << endl;
+        cout << "Ascii in files " << filenameA << " and " << filenameB << " and diff so far:" << endl;
 
         // we use file A as sync reference
-        while (!finA.eof() || !finB.eof()) {
+        while (!finA.eof()) {
 
             finA.get(charA);
             finB.get(charB);
@@ -87,7 +95,7 @@ class KukaExXMLMessage
 
         char achar;
 
-        cout << "All ascii in file:" << endl;
+        cout << "All ascii in file: " << filename << endl;
 
         while (!fin.eof()) {
 
@@ -108,7 +116,7 @@ class KukaExXMLMessage
 
         char achar;
 
-        cout << "All characters in file:" << endl;
+        cout << "All characters in file: " << filename << endl;
 
         while (!fin.eof()) {
 

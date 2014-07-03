@@ -131,8 +131,10 @@ int main () {
 
     char *external_filename = "ExternalData.xml";
 
+    kexml_msg.printAllCharsFromFile(created_filename);
     kexml_msg.printAllCharsFromFile(external_filename);
-    kexml_msg.printAllAsciiFromTwoFiles(external_filename,created_filename);
+
+    kexml_msg.printAllAsciiFromTwoFiles(external_filename,created_filename);    // kuka file is A
 
     return 0;
 }
