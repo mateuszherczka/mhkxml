@@ -24,8 +24,14 @@ class KukaExXMLMessage
 {
     public:
 
-    KukaExXMLMessage() {
-        cout << "Creating KukaExXMLMessage." << endl;
+    KukaExXMLMessage() : doc(true,COLLAPSE_WHITESPACE) {
+        if(doc.WhitespaceMode() == COLLAPSE_WHITESPACE) {
+            cout << "Collapsing whitespace." << endl;
+        }
+        else {
+            cout << "Preserving whitespace." << endl;
+        }
+
         buildDocument();
     }
 
@@ -36,14 +42,93 @@ class KukaExXMLMessage
 
     void toFile(const char *filename) {
         XMLError toFileStatus = doc.SaveFile(filename, false);
-        cout << "Tried saving xml file: " << toFileStatus << endl;
+        cout << "Tried saving xml file: " << toFileStatus << endl;  // debug msg
+    }
+
+    void printAllAsciiFromTwoFiles(const char *filenameA, const char *filenameB) {
+
+        ifstream finA;
+        ifstream finB;
+
+        finA.open(filenameA, ios::in);
+        finB.open(filenameB, ios::in);
+
+        char charA;
+        char charB;
+
+        int diff = 0;
+
+        cout << "Ascii characters in files A B and difference so far:" << endl;
+
+        // we use file A as sync reference
+        while (!finA.eof() || !finB.eof()) {
+
+            finA.get(charA);
+            finB.get(charB);
+
+            int asciiA = int(charA);
+            int asciiB = int(charB);
+
+            if (asciiA != asciiB) {
+                ++diff;
+            }
+
+            cout << asciiA << " " << asciiB << " " << diff << endl;
+
+        }
+
+        cout << endl;
+    }
+
+    void printAllAsciiFromFile(const char *filename) {
+
+        ifstream fin;
+        fin.open(filename, ios::in);
+
+        char achar;
+
+        cout << "All ascii in file:" << endl;
+
+        while (!fin.eof()) {
+
+            fin.get(achar);
+            int ascii = int(achar);
+
+            cout << ascii << " " << achar << endl;
+
+        }
+
+        cout << endl;
+    }
+
+    void printAllCharsFromFile(const char *filename) {
+
+        ifstream fin;
+        fin.open(filename, ios::in);
+
+        char achar;
+
+        cout << "All characters in file:" << endl;
+
+        while (!fin.eof()) {
+
+            fin.get(achar);
+            //int ascii = int(achar);
+
+            cout << achar;
+
+        }
+
+        cout << endl;
     }
 
     protected:
 
     private:
 
-    XMLDocument doc;    // created here
+    bool processEntities = true;
+
+    XMLDocument doc;
 
     XMLElement  *external_data; // root
 

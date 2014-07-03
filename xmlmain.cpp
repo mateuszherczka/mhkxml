@@ -125,9 +125,14 @@ int main () {
 
 //    tokenizeExample();
 //    write_app_settings_doc();
+    char *created_filename = "kuka_ex_xml.xml";
+    KukaExXMLMessage kexml_msg;
+    kexml_msg.toFile(created_filename);
 
-        KukaExXMLMessage kexml_msg;
-        kexml_msg.toFile("kuka_ex_xml.xml");
+    char *external_filename = "ExternalData.xml";
+
+    kexml_msg.printAllCharsFromFile(external_filename);
+    kexml_msg.printAllAsciiFromTwoFiles(external_filename,created_filename);
 
     return 0;
 }

@@ -22,7 +22,7 @@
 	<android/log.h>
 	<assert.h>
 
-1404392174 source:/home/mh/dev/xmltest/xmlmain.cpp
+1404399460 source:/home/mh/dev/xmltest/xmlmain.cpp
 	<iostream>
 	<fstream>
 	<string>
@@ -47,7 +47,7 @@
 	<android/log.h>
 	<assert.h>
 
-1404392875 /home/mh/dev/xmltest/include/KukaExXMLMessage.hpp
+1404400220 /home/mh/dev/xmltest/include/KukaExXMLMessage.hpp
 	<iostream>
 	<fstream>
 	<string>
