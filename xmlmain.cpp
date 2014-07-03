@@ -5,6 +5,8 @@
 #include <boost/tokenizer.hpp>
 #include <tinyxml2.h>
 
+#include <KukaExXMLMessage.hpp>
+
 using namespace std;
 using namespace boost;
 using namespace tinyxml2;
@@ -92,8 +94,7 @@ void write_app_settings_doc( )
     doc.SaveFile( "appsettings.xml" );
 }
 
-
-int main () {
+void tokenizeExample() {
     string line;
     ifstream myfile ("example.txt");
 
@@ -119,7 +120,14 @@ int main () {
 
     else cout << "Unable to open file";
 
-    write_app_settings_doc();
+}
+int main () {
+
+//    tokenizeExample();
+//    write_app_settings_doc();
+
+        KukaExXMLMessage kexml_msg;
+        kexml_msg.toFile("kuka_ex_xml.xml");
 
     return 0;
 }

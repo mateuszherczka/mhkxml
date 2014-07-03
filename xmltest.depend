@@ -22,12 +22,13 @@
 	<android/log.h>
 	<assert.h>
 
-1404373526 source:/home/mh/dev/xmltest/xmlmain.cpp
+1404392174 source:/home/mh/dev/xmltest/xmlmain.cpp
 	<iostream>
 	<fstream>
 	<string>
 	<boost/tokenizer.hpp>
 	<tinyxml2.h>
+	<KukaExXMLMessage.hpp>
 	"tinyxml2.h"
 
 1404307912 /home/mh/Libraries/tinyXml2/include/tinyxml2.h
@@ -45,4 +46,10 @@
 	<cstdarg>
 	<android/log.h>
 	<assert.h>
+
+1404392875 /home/mh/dev/xmltest/include/KukaExXMLMessage.hpp
+	<iostream>
+	<fstream>
+	<string>
+	<tinyxml2.h>
 
