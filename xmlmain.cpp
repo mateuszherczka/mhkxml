@@ -6,6 +6,7 @@
 #include <tinyxml2.h>
 
 #include <KukaExXMLMessage.hpp>
+#include <KukaParseExXMLMessage.hpp>
 
 using namespace std;
 using namespace boost;
@@ -125,19 +126,22 @@ int main () {
 
 //    tokenizeExample();
 //    write_app_settings_doc();
-    char *created_filename = "kuka_ex_xml.xml";
-    KukaExXMLMessage kexml_msg;
+//    char *created_filename = "kuka_ex_xml.xml";
+//    KukaExXMLMessage kexml_msg;
 
     //kexml_msg.toFile(created_filename);
 
-    //char *external_filename = "ExternalData.xml";
+    char *external_filename = "ExternalData.xml";
 
     //kexml_msg.printAllCharsFromFile(created_filename);
     //kexml_msg.printAllCharsFromFile(external_filename);
 
     //kexml_msg.printAllAsciiFromTwoFiles(external_filename,created_filename);    // kuka file is A
 
-    kexml_msg.printSpfXml();
+//    kexml_msg.printSpfXml();
+
+    KukaParseExXMLMessage kpex;
+    kpex.loadAndParse(external_filename);
 
     return 0;
 }

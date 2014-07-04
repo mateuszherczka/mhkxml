@@ -14,8 +14,9 @@ using namespace tinyxml2;
 // Difference in whitespaces! We will see if this is a problem.
 // DONE: write program that prints all chars in xml char array
 
-// TODO: implement *clean* double to string conversion
+// TODO: (maybe not needed) implement *clean* double to string conversion
 // TODO: XML Parsing of kuka message
+// TODO: Test XML sending with echoserver
 
 // DONE: hardcode outgoing xml with just c++
 // Implemented several methods
@@ -46,6 +47,7 @@ class KukaExXMLMessage
 
     virtual ~KukaExXMLMessage() {
         // TODO: write destructor
+        delete outDataBuffer;
     }
 
     void toFile(const char *filename) {
