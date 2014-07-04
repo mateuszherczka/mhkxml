@@ -142,6 +142,7 @@ int main () {
 
     KukaParseExXMLMessage kpex;
     kpex.loadAndParse(external_filename);
+    kpex.printValues();
 
     return 0;
 }
