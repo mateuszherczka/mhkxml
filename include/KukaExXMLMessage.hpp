@@ -49,7 +49,15 @@ class KukaExXMLMessage
     }
 
     void toFile(const char *filename) {
-        XMLError toFileStatus = doc.SaveFile(filename, false);
+
+        ofstream myfile (filename);
+        if (myfile.is_open())
+        {
+            myfile << outDataBuffer;
+            myfile.close();
+        }
+        else cout << "Unable to open file";
+//        XMLError toFileStatus = doc.SaveFile(filename, false);
 
 //        FILE *fp = fopen(filename,"w");
 //        if (fp == NULL) {cout << "Error opening file";}
@@ -178,13 +186,21 @@ class KukaExXMLMessage
     void printSpfXml() {
         cout << "Building with no tabs." << endl;
         buildKukaExDocumentSpfTab();
+        toFile("spf_xml_tabs.xml");
         cout << "With Tabs Buffersize:" << outDataBufferLength << endl;
         cout << outDataBuffer;
 
         cout << "Building with tabs." << endl;
         buildKukaExDocumentSpfNoTab();
+        toFile("spf_xml_notabs.xml");
         cout << "No Tabs Buffersize:" << outDataBufferLength << endl;
         cout << outDataBuffer;
+    }
+
+    void setPosXYZ(double x, double y, double z) {
+        xpos = x;
+        ypos = y;
+        zpos = z;
     }
 
     protected:
@@ -373,35 +389,35 @@ class KukaExXMLMessage
     void buildKukaExDocumentSpfTab() {
 
         const char* exampleXMLFormat =
-        "<ExternalData>%c\
-        %c<TString>%s</TString>%c\
-        %c<Position>%c\
-        %c%c<XPos>%g</XPos>%c\
-        %c%c<YPos>%g</YPos>%c\
-        %c%c<ZPos>%g</ZPos>%c\
-        %c</Position>%c\
-        %c<Temperature>%c\
-        %c%c<Cpu>%g</Cpu>%c\
-        %c%c<Fan>%g</Fan>%c\
-        %c</Temperature>%c\
-        %c<Ints>%c\
-        %c%c<AState>%d</AState>%c\
-        %c%c<BState>%d</BState>%c\
-        %c</Ints>%c\
-        %c<Boolean>%c\
-        %c%c<CState>%u</CState>%c\
-        %c</Boolean>%c\
-        %c<Frames>%c\
-        %c%c<XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" />%c\
-        %c</Frames>%c\
-        %c<Frames>%c\
-        %c%c<XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" />%c\
-        %c</Frames>%c\
-        %c<Frames>%c\
-        %c%c<XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" />%c\
-        %c</Frames>%c\
-        </ExternalData>%c\
-        ";
+"<ExternalData>%c\
+%c<TString>%s</TString>%c\
+%c<Position>%c\
+%c%c<XPos>%g</XPos>%c\
+%c%c<YPos>%g</YPos>%c\
+%c%c<ZPos>%g</ZPos>%c\
+%c</Position>%c\
+%c<Temperature>%c\
+%c%c<Cpu>%g</Cpu>%c\
+%c%c<Fan>%g</Fan>%c\
+%c</Temperature>%c\
+%c<Ints>%c\
+%c%c<AState>%d</AState>%c\
+%c%c<BState>%d</BState>%c\
+%c</Ints>%c\
+%c<Boolean>%c\
+%c%c<CState>%u</CState>%c\
+%c</Boolean>%c\
+%c<Frames>%c\
+%c%c<XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" />%c\
+%c</Frames>%c\
+%c<Frames>%c\
+%c%c<XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" />%c\
+%c</Frames>%c\
+%c<Frames>%c\
+%c%c<XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" />%c\
+%c</Frames>%c\
+</ExternalData>%c\
+";
 
         outDataBufferLength = sprintf(outDataBuffer,exampleXMLFormat,
             LF,
@@ -423,13 +439,13 @@ class KukaExXMLMessage
             TAB,TAB,cstate,BR,
             TAB,BR,
             TAB,BR,
-            TAB,TAB,f1xpos,f1ypos,f1zpos,f1arot,f1brot,f1brot,BR,
+            TAB,TAB,f1xpos,f1ypos,f1zpos,f1arot,f1brot,f1crot,BR,
             TAB,BR,
             TAB,BR,
-            TAB,TAB,f2xpos,f2ypos,f2zpos,f2arot,f2brot,f2brot,BR,
+            TAB,TAB,f2xpos,f2ypos,f2zpos,f2arot,f2brot,f2crot,BR,
             TAB,BR,
             TAB,BR,
-            TAB,TAB,f3xpos,f3ypos,f3zpos,f3arot,f3brot,f3brot,BR,
+            TAB,TAB,f3xpos,f3ypos,f3zpos,f3arot,f3brot,f3crot,BR,
             TAB,BR,
             BR
             );
@@ -437,36 +453,39 @@ class KukaExXMLMessage
 
     void buildKukaExDocumentSpfNoTab() {
 
+        // this has to be non-indented in this silly way
+        // unless we want the extra tabs...
+        // better solution?
         const char* exampleXMLFormat =
-        "<ExternalData> \n\
-        <TString>%s</TString> \n\
-        <Position> \n\
-        <XPos>%g</XPos> \n\
-        <YPos>%g</YPos> \n\
-        <ZPos>%g</ZPos> \n\
-        </Position> \n\
-        <Temperature> \n\
-        <Cpu>%g</Cpu> \n\
-        <Fan>%g</Fan> \n\
-        </Temperature> \n\
-        <Ints> \n\
-        <AState>%d</AState> \n\
-        <BState>%d</BState> \n\
-        </Ints> \n\
-        <Boolean> \n\
-        <CState>%u</CState> \n\
-        </Boolean> \n\
-        <Frames> \n\
-        <XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" /> \n\
-        </Frames> \n\
-        <Frames> \n\
-        <XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" /> \n\
-        </Frames> \n\
-        <Frames> \n\
-        <XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" /> \n\
-        </Frames> \n\
-        </ExternalData> \n\
-        ";
+"<ExternalData> \n\
+<TString>%s</TString> \n\
+<Position> \n\
+<XPos>%g</XPos> \n\
+<YPos>%g</YPos> \n\
+<ZPos>%g</ZPos> \n\
+</Position> \n\
+<Temperature> \n\
+<Cpu>%g</Cpu> \n\
+<Fan>%g</Fan> \n\
+</Temperature> \n\
+<Ints> \n\
+<AState>%d</AState> \n\
+<BState>%d</BState> \n\
+</Ints> \n\
+<Boolean> \n\
+<CState>%u</CState> \n\
+</Boolean> \n\
+<Frames> \n\
+<XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" /> \n\
+</Frames> \n\
+<Frames> \n\
+<XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" /> \n\
+</Frames> \n\
+<Frames> \n\
+<XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" /> \n\
+</Frames> \n\
+</ExternalData> \n\
+";
 
         outDataBufferLength = sprintf(outDataBuffer,exampleXMLFormat,
 
@@ -479,9 +498,9 @@ class KukaExXMLMessage
             astate,
             bstate,
             cstate,
-            f1xpos,f1ypos,f1zpos,f1arot,f1brot,f1brot,
-            f2xpos,f2ypos,f2zpos,f2arot,f2brot,f2brot,
-            f3xpos,f3ypos,f3zpos,f3arot,f3brot,f3brot
+            f1xpos,f1ypos,f1zpos,f1arot,f1brot,f1crot,
+            f2xpos,f2ypos,f2zpos,f2arot,f2brot,f2crot,
+            f3xpos,f3ypos,f3zpos,f3arot,f3brot,f3crot
 
             );
     }

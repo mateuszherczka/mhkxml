@@ -1,0 +1,28 @@
+<ExternalData>
+	<TString>EKX message example!</TString>
+	<Position>
+		<XPos>1523.23</XPos>
+		<YPos>494.234</YPos>
+		<ZPos>14.4</ZPos>
+	</Position>
+	<Temperature>
+		<Cpu>35.0979</Cpu>
+		<Fan>40.7587</Fan>
+	</Temperature>
+	<Ints>
+		<AState>23456</AState>
+		<BState>64</BState>
+	</Ints>
+	<Boolean>
+		<CState>0</CState>
+	</Boolean>
+	<Frames>
+		<XFrame XPos="1.6" YPos="2.5" ZPos="3.4" ARot="4.3" BRot="5.2" CRot="6.2" />
+	</Frames>
+	<Frames>
+		<XFrame XPos="13.1" YPos="24.5" ZPos="837.54" ARot="142.3" BRot="65.2" CRot="56.94" />
+	</Frames>
+	<Frames>
+		<XFrame XPos="764.6" YPos="134.5" ZPos="36.54" ARot="24.3" BRot="36.2" CRot="5" />
+	</Frames>
+</ExternalData>
