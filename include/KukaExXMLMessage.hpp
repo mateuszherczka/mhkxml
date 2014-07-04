@@ -16,7 +16,9 @@ using namespace tinyxml2;
 
 // TODO: implement *clean* double to string conversion
 // TODO: XML Parsing of kuka message
-// TODO: hardcode outgoing xml with just c++
+
+// DONE: hardcode outgoing xml with just c++
+// Implemented several methods
 
 /**
 Holds an xml structure similar to
@@ -173,6 +175,18 @@ class KukaExXMLMessage
         cout << endl;
     }
 
+    void printSpfXml() {
+        cout << "Building with no tabs." << endl;
+        buildKukaExDocumentSpfTab();
+        cout << "With Tabs Buffersize:" << outDataBufferLength << endl;
+        cout << outDataBuffer;
+
+        cout << "Building with tabs." << endl;
+        buildKukaExDocumentSpfNoTab();
+        cout << "No Tabs Buffersize:" << outDataBufferLength << endl;
+        cout << outDataBuffer;
+    }
+
     protected:
 
     private:
@@ -180,12 +194,48 @@ class KukaExXMLMessage
     const int TAB = 9;
     const int LF = 10;
     const int CR = 13;
+    const int BR = LF;
 
     const int BUFFER_SIZE = 10240;
 
     char *outDataBuffer;
+    int outDataBufferLength = 0;
 
     XMLDocument doc;
+
+    char *estr = "EKX message example!";
+
+    double xpos = 1523.232;
+    double ypos = 494.2343;
+    double zpos = 14.4;
+
+    double cpu = 35.09787;
+    double fan = 40.75869;
+
+    int astate = 23456;
+    int bstate = 64;
+    int cstate = 0;
+
+    double f1xpos = 1.6;
+    double f1ypos = 2.5;
+    double f1zpos = 3.4;
+    double f1arot = 4.3;
+    double f1brot = 5.2;
+    double f1crot = 6.2;
+
+    double f2xpos = 13.1;
+    double f2ypos = 24.5;
+    double f2zpos = 837.54;
+    double f2arot = 142.3;
+    double f2brot = 65.2;
+    double f2crot = 56.94;
+
+    double f3xpos = 764.6;
+    double f3ypos = 134.5;
+    double f3zpos = 36.54;
+    double f3arot = 24.3;
+    double f3brot = 36.2;
+    double f3crot = 5;
 
     /**
     Build an xml document with tinyxml2 exactly like kuka example,
@@ -320,44 +370,11 @@ class KukaExXMLMessage
         xframe_3->SetAttribute("CRot","5");
     }
 
-    void buildKukaExDocumentSpf() {
+    void buildKukaExDocumentSpfTab() {
 
-        double xpos = 1523.232;
-        double xpos = 494.2343;
-        double xpos = 14.4;
-
-        double cpu = 35.09787;
-        double fan = 40.75869;
-
-        int astate = 23456;
-        int bstate = 64;
-        int cstate = 0;
-
-        double f1xpos = 1.6;
-        double f1ypos = 2.5;
-        double f1zpos = 3.4;
-        double f1arot = 4.3;
-        double f1brot = 5.2;
-        double f1crot = 6.2;
-
-        double f2xpos = 13.1;
-        double f2ypos = 24.5;
-        double f2zpos = 837.54;
-        double f2arot = 142.3;
-        double f2brot = 65.2;
-        double f2crot = 56.94;
-
-        double f3xpos = 764.6;
-        double f3ypos = 134.5;
-        double f3zpos = 36.54;
-        double f3arot = 24.3;
-        double f3brot = 36.2;
-        double f3crot = 5;
-
-
-        const char* exampleXMLFormatClean =
+        const char* exampleXMLFormat =
         "<ExternalData>%c\
-        %c<TString>EKX message example!</TString>%c\
+        %c<TString>%s</TString>%c\
         %c<Position>%c\
         %c%c<XPos>%g</XPos>%c\
         %c%c<YPos>%g</YPos>%c\
@@ -386,38 +403,86 @@ class KukaExXMLMessage
         </ExternalData>%c\
         ";
 
-        int stringLength = 0;
+        outDataBufferLength = sprintf(outDataBuffer,exampleXMLFormat,
+            LF,
+            TAB,estr,LF,
+            TAB,BR,
+            TAB,TAB,xpos,BR,
+            TAB,TAB,ypos,BR,
+            TAB,TAB,zpos,BR,
+            TAB,BR,
+            TAB,BR,
+            TAB,TAB,cpu,BR,
+            TAB,TAB,fan,BR,
+            TAB,BR,
+            TAB,BR,
+            TAB,TAB,astate,BR,
+            TAB,TAB,bstate,BR,
+            TAB,BR,
+            TAB,BR,
+            TAB,TAB,cstate,BR,
+            TAB,BR,
+            TAB,BR,
+            TAB,TAB,f1xpos,f1ypos,f1zpos,f1arot,f1brot,f1brot,BR,
+            TAB,BR,
+            TAB,BR,
+            TAB,TAB,f2xpos,f2ypos,f2zpos,f2arot,f2brot,f2brot,BR,
+            TAB,BR,
+            TAB,BR,
+            TAB,TAB,f3xpos,f3ypos,f3zpos,f3arot,f3brot,f3brot,BR,
+            TAB,BR,
+            BR
+            );
+    }
 
-        stringLength = sprintf(outDataBuffer,
-            exampleXMLFormatClean,
-            CR,
-            TAB,CR,
-            TAB,CR,
-            TAB,TAB,xpos,CR,
-            TAB,TAB,ypos,CR,
-            TAB,TAB,zpos,CR,
-            TAB,CR,
-            TAB,CR,
-            TAB,TAB,cpu,CR,
-            TAB,TAB,fan,CR,
-            TAB,CR,
-            TAB,CR,
-            TAB,TAB,astate,CR,
-            TAB,TAB,bstate,CR,
-            TAB,CR,
-            TAB,CR,
-            TAB,TAB,cstate,CR,
-            TAB,CR,
-            TAB,CR,
-            TAB,TAB,f1xpos,f1ypos,f1zpos,f1arot,f1brot,f1crot,CR,
-            TAB,CR,
-            TAB,CR,
-            TAB,TAB,f2xpos,f2ypos,f2zpos,f2arot,f2brot,f2crot,CR,
-            TAB,CR,
-            TAB,CR,
-            TAB,TAB,f3xpos,f3ypos,f3zpos,f3arot,f3brot,f3crot,CR,
-            TAB,CR,
-            CR
+    void buildKukaExDocumentSpfNoTab() {
+
+        const char* exampleXMLFormat =
+        "<ExternalData> \n\
+        <TString>%s</TString> \n\
+        <Position> \n\
+        <XPos>%g</XPos> \n\
+        <YPos>%g</YPos> \n\
+        <ZPos>%g</ZPos> \n\
+        </Position> \n\
+        <Temperature> \n\
+        <Cpu>%g</Cpu> \n\
+        <Fan>%g</Fan> \n\
+        </Temperature> \n\
+        <Ints> \n\
+        <AState>%d</AState> \n\
+        <BState>%d</BState> \n\
+        </Ints> \n\
+        <Boolean> \n\
+        <CState>%u</CState> \n\
+        </Boolean> \n\
+        <Frames> \n\
+        <XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" /> \n\
+        </Frames> \n\
+        <Frames> \n\
+        <XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" /> \n\
+        </Frames> \n\
+        <Frames> \n\
+        <XFrame XPos=\"%g\" YPos=\"%g\" ZPos=\"%g\" ARot=\"%g\" BRot=\"%g\" CRot=\"%g\" /> \n\
+        </Frames> \n\
+        </ExternalData> \n\
+        ";
+
+        outDataBufferLength = sprintf(outDataBuffer,exampleXMLFormat,
+
+            estr,
+            xpos,
+            ypos,
+            zpos,
+            cpu,
+            fan,
+            astate,
+            bstate,
+            cstate,
+            f1xpos,f1ypos,f1zpos,f1arot,f1brot,f1brot,
+            f2xpos,f2ypos,f2zpos,f2arot,f2brot,f2brot,
+            f3xpos,f3ypos,f3zpos,f3arot,f3brot,f3brot
+
             );
     }
 
