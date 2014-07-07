@@ -41,7 +41,7 @@ class KukaExXMLMessage
 
         outDataBuffer = new char[BUFFER_SIZE];
 
-        buildKukaExDocumentTXML2();
+        //buildKukaExDocumentTXML2();
     }
 
 

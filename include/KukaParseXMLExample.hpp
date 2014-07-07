@@ -1,63 +1,16 @@
-#ifndef KUKAPARSEEXXMLMESSAGE_H
-#define KUKAPARSEEXXMLMESSAGE_H
+#ifndef KUKAPARSEXMLEXAMPLE_H
+#define KUKAPARSEXMLEXAMPLE_H
 
-#include <iostream>
-#include <fstream>
-#include <string>
-
-#include <tinyxml2.h>
-
-// TODO: separate parsing for error checking!
-
-using namespace std;
-using namespace tinyxml2;
-
-class KukaParseExXMLMessage
+// TODO: finish this
+class KukaParseXMLExample
 {
     public:
+        KukaParseXMLExample() {}
+        virtual ~KukaParseXMLExample() {}
 
-        const int MALFORMED_XML_ERROR = 1;
+        void parse(const char *buffer) {
 
-        KukaParseExXMLMessage() {
-
-            // we won't need this
-            // someBuffer = new char[1024];
-        }
-        virtual ~KukaParseExXMLMessage() {}
-
-        void printValues() {
-            cout << estr << endl;
-            cout << xPos << endl;
-            cout << yPos << endl;
-            cout << zPos << endl;
-            cout << cpu << endl;
-            cout << fan << endl;
-            cout << astate << endl;
-            cout << bstate << endl;
-            cout << cstate << endl;
-            cout << xPos1 << endl;
-            cout << yPos1 << endl;
-            cout << zPos1 << endl;
-            cout << aRot1 << endl;
-            cout << bRot1 << endl;
-            cout << cRot1 << endl;
-            cout << xPos2 << endl;
-            cout << yPos2 << endl;
-            cout << zPos2 << endl;
-            cout << aRot2 << endl;
-            cout << bRot2 << endl;
-            cout << cRot2 << endl;
-            cout << xPos3 << endl;
-            cout << yPos3 << endl;
-            cout << zPos3 << endl;
-            cout << aRot3 << endl;
-            cout << bRot3 << endl;
-            cout << cRot3 << endl;
-        }
-
-        void loadAndParse(const char *filename) {
-
-            doc.LoadFile( filename );
+            doc.Parse( buffer );
             XMLHandle docHandle( &doc );
 
 
@@ -205,12 +158,10 @@ class KukaParseExXMLMessage
             }
 
         }
-
     protected:
     private:
 
-        //const char *someBuffer;
-
+        const int MALFORMED_XML_ERROR = 666;
         int error_state = 0;
 
         XMLDocument doc;
@@ -260,33 +211,6 @@ class KukaParseExXMLMessage
             cout << "XML malformed at " << e << " !" << endl;
             error_state = MALFORMED_XML_ERROR;
         }
-
-
 };
 
-#endif // KUKAPARSEEXXMLMESSAGE_H
-
-/* ------ Example 2: Lookup information. ---- */
-/*
-{
-    XMLDocument doc;
-    doc.LoadFile( "dream.xml" );
-
-    // Structure of the XML file:
-    // - Element "PLAY"      the root Element, which is the
-    //                       FirstChildElement of the Document
-    // - - Element "TITLE"   child of the root PLAY Element
-    // - - - Text            child of the TITLE Element
-
-    // Navigate to the title, using the convenience function,
-    // with a dangerous lack of error checking.
-    const char* title = doc.FirstChildElement( "PLAY" )->FirstChildElement( "TITLE" )->GetText();
-    printf( "Name of play (1): %s\n", title );
-
-    // Text is just another Node to TinyXML-2. The more
-    // general way to get to the XMLText:
-    XMLText* textNode = doc.FirstChildElement( "PLAY" )->FirstChildElement( "TITLE" )->FirstChild()->ToText();
-    title = textNode->Value();
-    printf( "Name of play (2): %s\n", title );
-}
-*/
+#endif // KUKAPARSEXMLEXAMPLE_H
