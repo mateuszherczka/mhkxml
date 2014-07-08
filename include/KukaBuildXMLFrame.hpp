@@ -54,7 +54,7 @@ class KukaBuildXMLFrame
             std::ostream to_message_stream(&message);
 
             to_message_stream   << "<Rob> \r\n";
-            to_message_stream   << "<Frame\sXPos=\"" << xpos << "\" "
+            to_message_stream   << "<Frame XPos=\"" << xpos << "\" "
                                 << "YPos=\"" << ypos << "\" "
                                 << "ZPos=\"" << zpos << "\" "
                                 << "ARot=\"" << arot << "\" "

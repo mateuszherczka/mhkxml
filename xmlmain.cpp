@@ -8,10 +8,18 @@
 #include <KukaExXMLMessage.hpp>
 #include <KukaParseExXMLMessage.hpp>
 #include <KukaBuildXMLFrame.hpp>
+#include <KukaParseXMLFrame.hpp>
 
 using namespace std;
 using namespace boost;
 using namespace tinyxml2;
+
+
+const char *testframe =
+"<Rob> \r\n\
+<Frame XPos=\"1\" YPos=\"2\" ZPos=\"3\" ARot=\"4\" BRot=\"5\" CRot=\"6\"/> \r\n\
+</Rob> \r\n\
+\r\n";
 
 /*
 Copies (?) streambuf to a string and returns it.
@@ -21,6 +29,13 @@ std::string streambufToString(boost::asio::streambuf &message) {
     std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
     //return astr.c_str();
     return astr;
+}
+
+const char * streambufToPtr(boost::asio::streambuf &message) {
+    boost::asio::streambuf::const_buffers_type bufs = message.data();
+    std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
+    return astr.c_str();
+    //return astr;
 }
 
 
@@ -155,33 +170,20 @@ int main () {
 //    kpex.loadAndParse(external_filename);
 //    kpex.printValues();
 
+        //cout << testframe;
+
         boost::asio::streambuf message;
         KukaBuildXMLFrame kukaFrame;
 
         kukaFrame.build(message,1,2,3,4,5,6);
 
-        cout << streambufToString(message).c_str();
+        KukaParseXMLFrame kukaParseFrame;
 
-        // much better way to access entire message
-//        boost::asio::streambuf::const_buffers_type bufs = message.data();
-//        std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
-//        cout << astr.c_str();
-//        cout << astr;
+        cout << "Parsing from streambuf." << endl;
 
+        kukaParseFrame.parse(message);
+        kukaParseFrame.printValues();
 
-
-//        std::istream is(&message);
-//        std::string s;
-//        while (std::getline(is, s) && s != "\r\n") {
-//            std::cout << s << "\n";
-//        }
-
-//        std::istream is2(&message);
-//        std::string s2;
-//
-//        is2 >> s2;
-//
-//        std::cout << s2;
 
     return 0;
 }
@@ -222,3 +224,66 @@ int main(int argc, char* argv[])
     <Connection ip="192.168.0.1" timeout="123.456000" />
 </MyApp>
 */
+
+
+// much better way to access entire message
+//        boost::asio::streambuf::const_buffers_type bufs = message.data();
+//        std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
+//        cout << astr.c_str();
+//        cout << astr;
+
+
+
+//        std::istream is(&message);
+//        std::string s;
+//        while (std::getline(is, s) && s != "\r\n") {
+//            std::cout << s << "\n";
+//        }
+
+//        std::istream is2(&message);
+//        std::string s2;
+//
+//        is2 >> s2;
+//
+//        std::cout << s2;
+
+/*
+        cout << "Printing line by line." << endl;
+        std::istream is(&message);
+        std::string s;
+        while (std::getline(is, s) && s != "\r\n") {
+            std::cout << s << "\n";
+        }
+        */
+
+        /*
+        cout << "Trying ostringstream." << endl;
+        std::ostringstream ss;
+        ss << &message;
+        std::string message_str = ss.str();
+        cout << message_str;
+        */
+
+        //const char *message_str = streambufToString(message).c_str();
+
+        //cout << message_str;
+
+        /*
+        cout << "Parsing from quoted string." << endl;
+        kukaParseFrame.parse(testframe);
+        kukaParseFrame.printValues();
+        */
+        /*
+        cout << "Parsing from streambuf externally.";
+        XMLDocument doc;
+        doc.Parse(message_str.c_str());
+        //XMLHandle docHandle( &doc );
+
+        XMLError xml_error_state = doc.ErrorID();
+        if ( xml_error_state != 0 ) {
+            //XMLError("Buffer could't be parsed");
+            cout << "ErrorID: " << xml_error_state << endl;
+            return false;
+        }
+
+        */

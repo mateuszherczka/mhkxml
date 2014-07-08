@@ -13,12 +13,19 @@ class KukaParseXMLFrame
             // TODO: destructor
         }
 
+        bool parse(boost::asio::streambuf &message) {
+            parse(streambufToPtr(message));
+        }
+
         bool parse(const char* buffer) {
 
             doc.Parse(buffer);
+            XMLHandle docHandle( &doc );
+
             xml_error_state = doc.ErrorID();
             if ( xml_error_state != 0 ) {
                 XMLError("Buffer could't be parsed");
+                cout << "ErrorID: " << xml_error_state << endl;
                 return false;
             }
 
@@ -51,6 +58,24 @@ class KukaParseXMLFrame
             }
         }
 
+        const char * streambufToPtr(boost::asio::streambuf &message) {
+            boost::asio::streambuf::const_buffers_type bufs = message.data();
+            std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
+            return astr.c_str();
+            //return astr;
+        }
+
+        void printValues() {
+
+            cout << xPos << endl;
+            cout << yPos << endl;
+            cout << zPos << endl;
+            cout << aRot << endl;
+            cout << bRot << endl;
+            cout << cRot << endl;
+
+        }
+
     protected:
     private:
 
@@ -66,7 +91,7 @@ class KukaParseXMLFrame
     double bRot;
     double cRot;
 
-    XMLElement *xframe;
+    XMLElement *frame;
 
     void XMLError(const char *e) {
         cout << "XML malformed at " << e << " !" << endl;
