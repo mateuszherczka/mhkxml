@@ -7,6 +7,7 @@
 
 #include <KukaExXMLMessage.hpp>
 #include <KukaParseExXMLMessage.hpp>
+#include <KukaBuildXMLFrame.hpp>
 
 using namespace std;
 using namespace boost;
@@ -131,7 +132,7 @@ int main () {
 
     //kexml_msg.toFile(created_filename);
 
-    char *external_filename = "ExternalData.xml";
+    //char *external_filename = "ExternalData.xml";
 
     //kexml_msg.printAllCharsFromFile(created_filename);
     //kexml_msg.printAllCharsFromFile(external_filename);
@@ -140,9 +141,18 @@ int main () {
 
 //    kexml_msg.printSpfXml();
 
-    KukaParseExXMLMessage kpex;
-    kpex.loadAndParse(external_filename);
-    kpex.printValues();
+//    KukaParseExXMLMessage kpex;
+//    kpex.loadAndParse(external_filename);
+//    kpex.printValues();
+        boost::asio::streambuf message;
+        KukaBuildXMLFrame kukaFrame;
+        kukaFrame.build(message,1,2,3,4,5,6);
+
+        std::istream from_message_stream(&message);
+        std::string message_string;
+        while (std::getline(from_message_stream, message_string) && message_string != "\r\n") {
+            std::cout << message_string << "\n";
+        }
 
     return 0;
 }
