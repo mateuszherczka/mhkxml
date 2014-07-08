@@ -13,6 +13,16 @@ using namespace std;
 using namespace boost;
 using namespace tinyxml2;
 
+/*
+Copies (?) streambuf to a string and returns it.
+*/
+std::string streambufToString(boost::asio::streambuf &message) {
+    boost::asio::streambuf::const_buffers_type bufs = message.data();
+    std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
+    //return astr.c_str();
+    return astr;
+}
+
 
 void write_app_settings_doc( )
 {
@@ -144,15 +154,34 @@ int main () {
 //    KukaParseExXMLMessage kpex;
 //    kpex.loadAndParse(external_filename);
 //    kpex.printValues();
+
         boost::asio::streambuf message;
         KukaBuildXMLFrame kukaFrame;
+
         kukaFrame.build(message,1,2,3,4,5,6);
 
-        std::istream from_message_stream(&message);
-        std::string message_string;
-        while (std::getline(from_message_stream, message_string) && message_string != "\r\n") {
-            std::cout << message_string << "\n";
-        }
+        cout << streambufToString(message).c_str();
+
+        // much better way to access entire message
+//        boost::asio::streambuf::const_buffers_type bufs = message.data();
+//        std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
+//        cout << astr.c_str();
+//        cout << astr;
+
+
+
+//        std::istream is(&message);
+//        std::string s;
+//        while (std::getline(is, s) && s != "\r\n") {
+//            std::cout << s << "\n";
+//        }
+
+//        std::istream is2(&message);
+//        std::string s2;
+//
+//        is2 >> s2;
+//
+//        std::cout << s2;
 
     return 0;
 }
