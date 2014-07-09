@@ -13,10 +13,16 @@ class KukaParseXMLFrame
             // TODO: destructor
         }
 
+        /*
+        Pass a boost::streambuf
+        */
         bool parse(boost::asio::streambuf &message) {
             parse(streambufToPtr(message));
         }
 
+        /*
+        Pass a const char*
+        */
         bool parse(const char* buffer) {
 
             doc.Parse(buffer);
@@ -58,12 +64,29 @@ class KukaParseXMLFrame
             }
         }
 
+        /*
         const char * streambufToPtr(boost::asio::streambuf &message) {
             boost::asio::streambuf::const_buffers_type bufs = message.data();
             std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
             return astr.c_str();
-            //return astr;
         }
+        */
+
+        // this is another variant, seems to work, not sure how safe, probably faster
+        const char * streambufToPtr(boost::asio::streambuf &message) {
+            const char* bufPtr=boost::asio::buffer_cast<const char*>(message.data());
+            return bufPtr;
+        }
+
+        /*
+        // alternative using stringstream
+        const char * streambufToPtr(boost::asio::streambuf &message) {
+            std::ostringstream ss;
+            ss << &message;
+            std::string astr = ss.str();
+            return astr.c_str();
+        }
+        */
 
         void printValues() {
 

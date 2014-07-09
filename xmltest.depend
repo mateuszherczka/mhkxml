@@ -22,7 +22,7 @@
 	<android/log.h>
 	<assert.h>
 
-1404834522 source:/home/mh/dev/xmltest/xmlmain.cpp
+1404889162 source:/home/mh/dev/xmltest/xmlmain.cpp
 	<iostream>
 	<fstream>
 	<string>
@@ -65,5 +65,5 @@
 1404834617 /home/mh/dev/xmltest/include/KukaBuildXMLFrame.hpp
 	<boost/asio.hpp>
 
-1404833429 /home/mh/dev/xmltest/include/KukaParseXMLFrame.hpp
+1404890129 /home/mh/dev/xmltest/include/KukaParseXMLFrame.hpp
 

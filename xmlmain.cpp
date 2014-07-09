@@ -27,7 +27,6 @@ Copies (?) streambuf to a string and returns it.
 std::string streambufToString(boost::asio::streambuf &message) {
     boost::asio::streambuf::const_buffers_type bufs = message.data();
     std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
-    //return astr.c_str();
     return astr;
 }
 
@@ -35,8 +34,17 @@ const char * streambufToPtr(boost::asio::streambuf &message) {
     boost::asio::streambuf::const_buffers_type bufs = message.data();
     std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
     return astr.c_str();
-    //return astr;
 }
+
+/*
+// alternative using stringstream
+const char * streambufToPtr(boost::asio::streambuf &message) {
+    std::ostringstream ss;
+    ss << &message;
+    std::string astr = ss.str();
+    return astr.c_str();
+}
+*/
 
 
 void write_app_settings_doc( )
@@ -149,28 +157,6 @@ void tokenizeExample() {
 
 }
 int main () {
-
-//    tokenizeExample();
-//    write_app_settings_doc();
-//    char *created_filename = "kuka_ex_xml.xml";
-//    KukaExXMLMessage kexml_msg;
-
-    //kexml_msg.toFile(created_filename);
-
-    //char *external_filename = "ExternalData.xml";
-
-    //kexml_msg.printAllCharsFromFile(created_filename);
-    //kexml_msg.printAllCharsFromFile(external_filename);
-
-    //kexml_msg.printAllAsciiFromTwoFiles(external_filename,created_filename);    // kuka file is A
-
-//    kexml_msg.printSpfXml();
-
-//    KukaParseExXMLMessage kpex;
-//    kpex.loadAndParse(external_filename);
-//    kpex.printValues();
-
-        //cout << testframe;
 
         boost::asio::streambuf message;
         KukaBuildXMLFrame kukaFrame;
@@ -287,3 +273,25 @@ int main(int argc, char* argv[])
         }
 
         */
+
+        //    tokenizeExample();
+//    write_app_settings_doc();
+//    char *created_filename = "kuka_ex_xml.xml";
+//    KukaExXMLMessage kexml_msg;
+
+    //kexml_msg.toFile(created_filename);
+
+    //char *external_filename = "ExternalData.xml";
+
+    //kexml_msg.printAllCharsFromFile(created_filename);
+    //kexml_msg.printAllCharsFromFile(external_filename);
+
+    //kexml_msg.printAllAsciiFromTwoFiles(external_filename,created_filename);    // kuka file is A
+
+//    kexml_msg.printSpfXml();
+
+//    KukaParseExXMLMessage kpex;
+//    kpex.loadAndParse(external_filename);
+//    kpex.printValues();
+
+        //cout << testframe;
