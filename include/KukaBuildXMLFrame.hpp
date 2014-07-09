@@ -6,7 +6,7 @@
 
 //using boost::asio;
 //using std;
-
+//
 class KukaBuildXMLFrame
 {
     public:
@@ -22,6 +22,7 @@ class KukaBuildXMLFrame
         Pass in a buffer. Make sure it's long enough;
         Returns buffer length.
         */
+        /*
         int build( char *buffer,
                     const double xpos,
                     const double ypos,
@@ -36,9 +37,10 @@ class KukaBuildXMLFrame
 
             );
         }
+        */
 
         /*
-        Returns a boost streambuf.
+        Fills a boost streambuf.
         */
         void build( boost::asio::streambuf &message,
                     const double xpos,
@@ -48,20 +50,17 @@ class KukaBuildXMLFrame
                     const double brot,
                     const double crot ) {
 
-
-            //boost::asio::streambuf message;
-
             std::ostream to_message_stream(&message);
 
-            to_message_stream   << "<Rob> \r\n";
+            to_message_stream   << "<Rob>\r\n";
             to_message_stream   << "<Frame XPos=\"" << xpos << "\" "
                                 << "YPos=\"" << ypos << "\" "
                                 << "ZPos=\"" << zpos << "\" "
                                 << "ARot=\"" << arot << "\" "
                                 << "BRot=\"" << brot << "\" "
-                                << "CRot=\"" << crot << "\"/> \r\n";
-            to_message_stream   << "</Rob> \r\n";
-            to_message_stream   << "\r\n";
+                                << "CRot=\"" << crot << "\"/>\r\n";
+            to_message_stream   << "</Rob>\r\n";
+            //to_message_stream   << "\r\n";
         }
 
     protected:

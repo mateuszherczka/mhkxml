@@ -22,16 +22,15 @@
 	<android/log.h>
 	<assert.h>
 
-1404889162 source:/home/mh/dev/xmltest/xmlmain.cpp
+1404920036 source:/home/mh/dev/xmltest/xmlmain.cpp
 	<iostream>
 	<fstream>
 	<string>
 	<boost/tokenizer.hpp>
 	<tinyxml2.h>
-	<KukaExXMLMessage.hpp>
-	<KukaParseExXMLMessage.hpp>
 	<KukaBuildXMLFrame.hpp>
 	<KukaParseXMLFrame.hpp>
+	<KukaBuildXMLExample.hpp>
 	"tinyxml2.h"
 
 1404307912 /home/mh/Libraries/tinyXml2/include/tinyxml2.h
@@ -50,20 +49,11 @@
 	<android/log.h>
 	<assert.h>
 
-1404741992 /home/mh/dev/xmltest/include/KukaExXMLMessage.hpp
-	<iostream>
-	<fstream>
-	<string>
-	<tinyxml2.h>
-
-1404737555 /home/mh/dev/xmltest/include/KukaParseExXMLMessage.hpp
-	<iostream>
-	<fstream>
-	<string>
-	<tinyxml2.h>
-
-1404834617 /home/mh/dev/xmltest/include/KukaBuildXMLFrame.hpp
+1404917057 /home/mh/dev/xmltest/include/KukaBuildXMLFrame.hpp
 	<boost/asio.hpp>
 
-1404890129 /home/mh/dev/xmltest/include/KukaParseXMLFrame.hpp
+1404919686 /home/mh/dev/xmltest/include/KukaParseXMLFrame.hpp
+	<tinyxml2.h>
+
+1404920049 /home/mh/dev/xmltest/include/KukaBuildXMLExample.hpp
 

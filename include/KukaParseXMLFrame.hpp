@@ -1,6 +1,12 @@
 #ifndef KUKAPARSEXMLFRAME_H
 #define KUKAPARSEXMLFRAME_H
 
+#include <tinyxml2.h>
+
+using namespace tinyxml2;
+using std::cout;
+using std::endl;
+
 
 class KukaParseXMLFrame
 {
@@ -17,7 +23,7 @@ class KukaParseXMLFrame
         Pass a boost::streambuf
         */
         bool parse(boost::asio::streambuf &message) {
-            parse(streambufToPtr(message));
+            return parse(streambufToPtr(message));
         }
 
         /*
@@ -62,21 +68,63 @@ class KukaParseXMLFrame
                 XMLError("Frame");
                 return false;
             }
+
+            return true;
         }
+
+        void printValues() {
+
+            cout << xPos << " "
+             << yPos << " "
+             << zPos << " "
+             << aRot << " "
+             << bRot << " "
+             << cRot << endl;
+
+        }
+
+    protected:
+    private:
+
+        //int error_state = 0;
+        int xml_error_state = 0;
+        XMLDocument doc;
+
+        double xPos;
+        double yPos;
+        double zPos;
+
+        double aRot;
+        double bRot;
+        double cRot;
+
+        XMLElement *frame;
 
         /*
-        const char * streambufToPtr(boost::asio::streambuf &message) {
-            boost::asio::streambuf::const_buffers_type bufs = message.data();
-            std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
-            return astr.c_str();
-        }
+        Gets a pointer to buffer inside streambuf.
         */
-
-        // this is another variant, seems to work, not sure how safe, probably faster
         const char * streambufToPtr(boost::asio::streambuf &message) {
             const char* bufPtr=boost::asio::buffer_cast<const char*>(message.data());
             return bufPtr;
         }
+
+        void XMLError(const char *e) {
+            cout << "XML malformed at " << e << " !" << endl;
+            xml_error_state = MALFORMED_XML_ERROR;
+        }
+
+};
+
+#endif // KUKAPARSEXMLFRAME_H
+
+/*
+        const char * streambufToPtr(boost::asio::streambuf &message) {
+            boost::asio::streambuf::const_buffers_type bufs = message.data();
+            std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
+            return astr.c_str();
+            // NO! STRING DESTROYED WHEN FUNCTION EXITS!
+        }
+        */
 
         /*
         // alternative using stringstream
@@ -85,42 +133,6 @@ class KukaParseXMLFrame
             ss << &message;
             std::string astr = ss.str();
             return astr.c_str();
+            // NO! STRING DESTROYED WHEN FUNCTION EXITS!
         }
         */
-
-        void printValues() {
-
-            cout << xPos << endl;
-            cout << yPos << endl;
-            cout << zPos << endl;
-            cout << aRot << endl;
-            cout << bRot << endl;
-            cout << cRot << endl;
-
-        }
-
-    protected:
-    private:
-
-    //int error_state = 0;
-    int xml_error_state = 0;
-    XMLDocument doc;
-
-    double xPos;
-    double yPos;
-    double zPos;
-
-    double aRot;
-    double bRot;
-    double cRot;
-
-    XMLElement *frame;
-
-    void XMLError(const char *e) {
-        cout << "XML malformed at " << e << " !" << endl;
-        xml_error_state = MALFORMED_XML_ERROR;
-    }
-
-};
-
-#endif // KUKAPARSEXMLFRAME_H

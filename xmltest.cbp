@@ -41,6 +41,7 @@
 		</Compiler>
 		<Linker>
 			<Add library="/home/mh/Libraries/tinyXml2/lib/libtinyxml2.a" />
+			<Add library="boost_system" />
 			<Add directory="/home/mh/Libraries/tinyXml2/lib" />
 		</Linker>
 		<Unit filename="include/KukaExXMLMessage.hpp" />

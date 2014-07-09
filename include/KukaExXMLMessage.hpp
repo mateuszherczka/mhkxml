@@ -82,8 +82,8 @@ class KukaExXMLMessage
         char charA;
         char charB;
 
-        char *charADesc = "AAAAA";
-        char *charBDesc = "BBBBB";
+        const char *charADesc = "AAAAA";
+        const char *charBDesc = "BBBBB";
 
         int diff = 0;
 
@@ -221,7 +221,7 @@ class KukaExXMLMessage
 
     XMLDocument doc;
 
-    char *estr = "EKX message example!";
+    const char *estr = "EKX message example!";
 
     double xpos = 1523.232;
     double ypos = 494.2343;

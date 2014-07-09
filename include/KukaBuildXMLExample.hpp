@@ -9,6 +9,59 @@ class KukaBuildXMLExample
         virtual ~KukaBuildXMLExample() {}
 
         /*
+        Fills streambuf.
+        */
+        void build( boost::asio::streambuf &message ) {
+
+            std::ostream to_message_stream(&message);
+
+            to_message_stream   << "<ExternalData>\r\n";
+            to_message_stream   << "<TString>" << estr << "</TString>\r\n";
+            to_message_stream   << "<Position>\r\n";
+            to_message_stream   << "<XPos>" << xpos << "</XPos>\r\n";
+            to_message_stream   << "<YPos>" << ypos << "</YPos>\r\n";
+            to_message_stream   << "<ZPos>" << zpos << "</ZPos>\r\n";
+            to_message_stream   << "</Position>\r\n";
+            to_message_stream   << "<Temperature>\r\n";
+            to_message_stream   << "<Cpu>" << cpu << "</Cpu>\r\n";
+            to_message_stream   << "<Fan>" << fan << "</Fan>\r\n";
+            to_message_stream   << "</Temperature>\r\n";
+            to_message_stream   << "<Ints>\r\n";
+            to_message_stream   << "<AState>" << astate << "</AState>\r\n";
+            to_message_stream   << "<BState>" << bstate << "</BState>\r\n";
+            to_message_stream   << "</Ints>\r\n";
+            to_message_stream   << "<Boolean>\r\n";
+            to_message_stream   << "<CState>" << cstate << "</CState>\r\n";
+            to_message_stream   << "</Boolean>\r\n";
+            to_message_stream   << "<Frames>\r\n";
+            to_message_stream   << "<XFrame XPos=\"" << f1xpos << "\" "
+                                << "YPos=\"" << f1ypos << "\" "
+                                << "ZPos=\"" << f1zpos << "\" "
+                                << "ARot=\"" << f1arot << "\" "
+                                << "BRot=\"" << f1brot << "\" "
+                                << "CRot=\"" << f1crot << "\"/>\r\n";
+            to_message_stream   << "</Frames>\r\n";
+            to_message_stream   << "<Frames>\r\n";
+            to_message_stream   << "<XFrame XPos=\"" << f2xpos << "\" "
+                                << "YPos=\"" << f2ypos << "\" "
+                                << "ZPos=\"" << f2zpos << "\" "
+                                << "ARot=\"" << f2arot << "\" "
+                                << "BRot=\"" << f2brot << "\" "
+                                << "CRot=\"" << f2crot << "\"/>\r\n";
+            to_message_stream   << "<Frames>\r\n";
+            to_message_stream   << "</Frames>\r\n";
+            to_message_stream   << "<XFrame XPos=\"" << f3xpos << "\" "
+                                << "YPos=\"" << f3ypos << "\" "
+                                << "ZPos=\"" << f3zpos << "\" "
+                                << "ARot=\"" << f3arot << "\" "
+                                << "BRot=\"" << f3brot << "\" "
+                                << "CRot=\"" << f3crot << "\"/>\r\n";
+            to_message_stream   << "</Frames>\r\n";
+            to_message_stream   << "</ExternalData>\r\n";
+            //to_message_stream   << "\r\n";
+        }
+
+        /*
         Just to change something.
         */
         void setPosXYZ(double x, double y, double z) {
@@ -16,7 +69,7 @@ class KukaBuildXMLExample
             ypos = y;
             zpos = z;
         }
-
+        /*
         void buildKukaExDocumentTab(const char *buffer) {
 
             outDataBufferLength = sprintf(buffer,exampleXMLFormatTab,
@@ -70,7 +123,7 @@ class KukaBuildXMLExample
 
                 );
         }
-
+    */
     protected:
     private:
 
@@ -83,7 +136,7 @@ class KukaBuildXMLExample
 
         XMLDocument doc;
 
-        char *estr = "EKX message example!";
+        const char *estr = "EKX message example!";
 
         double xpos = 1523.232;
         double ypos = 494.2343;

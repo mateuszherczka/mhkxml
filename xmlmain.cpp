@@ -5,10 +5,11 @@
 #include <boost/tokenizer.hpp>
 #include <tinyxml2.h>
 
-#include <KukaExXMLMessage.hpp>
-#include <KukaParseExXMLMessage.hpp>
+//#include <KukaExXMLMessage.hpp>
+//#include <KukaParseExXMLMessage.hpp>
 #include <KukaBuildXMLFrame.hpp>
 #include <KukaParseXMLFrame.hpp>
+#include <KukaBuildXMLExample.hpp>
 
 using namespace std;
 using namespace boost;
@@ -21,30 +22,17 @@ const char *testframe =
 </Rob> \r\n\
 \r\n";
 
-/*
-Copies (?) streambuf to a string and returns it.
-*/
-std::string streambufToString(boost::asio::streambuf &message) {
-    boost::asio::streambuf::const_buffers_type bufs = message.data();
-    std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
-    return astr;
-}
 
-const char * streambufToPtr(boost::asio::streambuf &message) {
-    boost::asio::streambuf::const_buffers_type bufs = message.data();
-    std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
-    return astr.c_str();
-}
 
 /*
-// alternative using stringstream
-const char * streambufToPtr(boost::asio::streambuf &message) {
-    std::ostringstream ss;
-    ss << &message;
-    std::string astr = ss.str();
-    return astr.c_str();
-}
-*/
+    Gets a pointer to buffer inside streambuf.
+    */
+    const char * streambufToPtr(boost::asio::streambuf &message) {
+        const char* bufPtr=boost::asio::buffer_cast<const char*>(message.data());
+        return bufPtr;
+    }
+
+
 
 
 void write_app_settings_doc( )
@@ -159,16 +147,21 @@ void tokenizeExample() {
 int main () {
 
         boost::asio::streambuf message;
-        KukaBuildXMLFrame kukaFrame;
+        //KukaBuildXMLFrame kukaFrame;
+        KukaBuildXMLExample kukaExample;
 
-        kukaFrame.build(message,1,2,3,4,5,6);
+        //kukaFrame.build(message,1,2,3,4,5,6);
+        kukaExample.build(message);
 
-        KukaParseXMLFrame kukaParseFrame;
+        cout << "Built:" << endl;
+        cout << streambufToPtr(message);
 
-        cout << "Parsing from streambuf." << endl;
+        //KukaParseXMLFrame kukaParseFrame;
 
-        kukaParseFrame.parse(message);
-        kukaParseFrame.printValues();
+        //cout << "Parsing from streambuf." << endl;
+
+        //kukaParseFrame.parse(message);
+        //kukaParseFrame.printValues();
 
 
     return 0;
@@ -295,3 +288,30 @@ int main(int argc, char* argv[])
 //    kpex.printValues();
 
         //cout << testframe;
+
+/*
+Copies (?) streambuf to a string and returns it.
+*/
+
+/*
+std::string streambufToString(boost::asio::streambuf &message) {
+    boost::asio::streambuf::const_buffers_type bufs = message.data();
+    std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
+    return astr;
+}
+
+const char * streambufToPtr(boost::asio::streambuf &message) {
+    boost::asio::streambuf::const_buffers_type bufs = message.data();
+    std::string astr(boost::asio::buffers_begin(bufs), boost::asio::buffers_begin(bufs) + message.size());
+    return astr.c_str();
+}
+*/
+/*
+// alternative using stringstream
+const char * streambufToPtr(boost::asio::streambuf &message) {
+    std::ostringstream ss;
+    ss << &message;
+    std::string astr = ss.str();
+    return astr.c_str();
+}
+*/
