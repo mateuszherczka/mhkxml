@@ -1,28 +1,32 @@
 // reading a text file
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <boost/tokenizer.hpp>
+//#include <iostream>
+//#include <fstream>
+//#include <string>
+//#include <boost/tokenizer.hpp>
 #include <tinyxml2.h>
+//#include <boost/lexical_cast.hpp>
 
 //#include <KukaExXMLMessage.hpp>
 //#include <KukaParseExXMLMessage.hpp>
-#include <KukaBuildXMLFrame.hpp>
-#include <KukaParseXMLFrame.hpp>
+//#include <KukaBuildXMLFrame.hpp>
+//#include <KukaParseXMLFrame.hpp>
 #include <KukaBuildXMLExample.hpp>
+#include <KukaParseXMLExample.hpp>
 
-using namespace std;
-using namespace boost;
-using namespace tinyxml2;
+//using namespace std;
+//using namespace boost;
+//using namespace tinyxml2;
+using boost::lexical_cast;
+using boost::bad_lexical_cast;
 
-
+/*
 const char *testframe =
 "<Rob> \r\n\
 <Frame XPos=\"1\" YPos=\"2\" ZPos=\"3\" ARot=\"4\" BRot=\"5\" CRot=\"6\"/> \r\n\
 </Rob> \r\n\
 \r\n";
 
-
+*/
 
 /*
     Gets a pointer to buffer inside streambuf.
@@ -34,7 +38,7 @@ const char *testframe =
 
 
 
-
+/*
 void write_app_settings_doc( )
 {
     XMLDocument doc;
@@ -117,6 +121,8 @@ void write_app_settings_doc( )
     doc.SaveFile( "appsettings.xml" );
 }
 
+*/
+/*
 void tokenizeExample() {
     string line;
     ifstream myfile ("example.txt");
@@ -144,6 +150,8 @@ void tokenizeExample() {
     else cout << "Unable to open file";
 
 }
+
+*/
 int main () {
 
         boost::asio::streambuf message;
@@ -156,13 +164,16 @@ int main () {
         cout << "Built:" << endl;
         cout << streambufToPtr(message);
 
-        //KukaParseXMLFrame kukaParseFrame;
 
-        //cout << "Parsing from streambuf." << endl;
+        //KukaParseXMLFrame kukaParseFrame;
+        KukaParseXMLExample kukaParseExample;
+
+        cout << "Parsing from streambuf." << endl;
 
         //kukaParseFrame.parse(message);
         //kukaParseFrame.printValues();
-
+        kukaParseExample.parse(message);
+        kukaParseExample.printValues();
 
     return 0;
 }

@@ -1,6 +1,12 @@
 #ifndef KUKABUILDXMLEXAMPLE_H
 #define KUKABUILDXMLEXAMPLE_H
 
+#include <boost/asio.hpp>
+#include <tinyxml2.h>
+
+using namespace tinyxml2;
+//using std::cout;
+//using std::endl;
 
 class KukaBuildXMLExample
 {
@@ -48,8 +54,8 @@ class KukaBuildXMLExample
                                 << "ARot=\"" << f2arot << "\" "
                                 << "BRot=\"" << f2brot << "\" "
                                 << "CRot=\"" << f2crot << "\"/>\r\n";
-            to_message_stream   << "<Frames>\r\n";
             to_message_stream   << "</Frames>\r\n";
+            to_message_stream   << "<Frames>\r\n";
             to_message_stream   << "<XFrame XPos=\"" << f3xpos << "\" "
                                 << "YPos=\"" << f3ypos << "\" "
                                 << "ZPos=\"" << f3zpos << "\" "

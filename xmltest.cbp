@@ -44,8 +44,9 @@
 			<Add library="boost_system" />
 			<Add directory="/home/mh/Libraries/tinyXml2/lib" />
 		</Linker>
-		<Unit filename="include/KukaExXMLMessage.hpp" />
-		<Unit filename="include/KukaParseXMLMessage.hpp" />
+		<Unit filename="include/KukaBuildXMLExample.hpp" />
+		<Unit filename="include/KukaBuildXMLFrame.hpp" />
+		<Unit filename="include/KukaParseXMLFrame.hpp" />
 		<Unit filename="tinyXMLsnippets.cpp" />
 		<Unit filename="tinyxml2.h" />
 		<Unit filename="xmlmain.cpp" />
